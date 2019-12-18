@@ -9,6 +9,6 @@ int main()
 	Vector<String> vec;
 	do {
 		vec.Push_back(buf);
-	} while ((buf = strtok(nullptr, " ")).C_string() != nullptr);
+	} while ((buf = strtok(NULL, " ")).C_string() != nullptr);
 	return 0;
 }

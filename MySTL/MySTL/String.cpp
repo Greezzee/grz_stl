@@ -59,7 +59,8 @@ size_t String::Lenght() const
 
 void String::Resize(size_t new_size)
 {
-	new_size++;
+	if (new_size != 0) new_size++;
+
 	if (new_size > _capacity || new_size < _len / 2) {
 		char* new_data = (char*)realloc(_data, new_size * 2 * sizeof(char));
 		if (new_data == nullptr && new_size != 0)
@@ -69,7 +70,13 @@ void String::Resize(size_t new_size)
 			_data[i] = '\0';
 		_capacity = new_size * 2;
 	}
-	_len = new_size - 1;
+
+	if (new_size == 0) {
+		_len = 0;
+		_data = nullptr;
+	}
+	else
+		_len = new_size - 1;
 }
 
 char* String::C_string()
@@ -174,4 +181,46 @@ String operator*(const unsigned a, const String& b)
 	String out = b;
 	out *= a;
 	return out;
+}
+
+bool operator==(const String& a, const String& b)
+{
+	if (a.C_string() == nullptr && b.C_string() == nullptr)
+		return true;
+	else if (a.C_string() == nullptr || b.C_string() == nullptr)
+		return false;
+	return strcmp(a.C_string(), b.C_string()) == 0;
+}
+
+bool operator==(const String& a, const char b[])
+{
+	if (b == nullptr && a.C_string() == nullptr)
+		return true;
+	else if (b == nullptr || a.C_string() == nullptr)
+		return false;
+	return strcmp(a.C_string(), b) == 0;
+}
+
+bool operator==(const char b[], const String& a)
+{
+	if (b == nullptr && a.C_string() == nullptr)
+		return true;
+	else if (b == nullptr || a.C_string() == nullptr)
+		return false;
+	return strcmp(a.C_string(), b) == 0;
+}
+
+bool operator!=(const String& a, const String& b)
+{
+	return !(a == b);
+}
+
+bool operator!=(const String& a, const char b[])
+{
+	return !(a == b);
+}
+
+bool operator!=(const char b[], const String& a)
+{
+	return !(a == b);
 }

@@ -32,6 +32,8 @@ public:
 	friend String operator*(const String& a, const unsigned b);
 	friend String operator*(const unsigned a, const String& b);
 private:
+
 	char* _data;
 	size_t _len, _capacity;
+	bool _is_null;
 };

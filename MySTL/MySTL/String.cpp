@@ -99,12 +99,13 @@ String& String::operator=(const String& src)
 String& String::operator=(const char src[])
 {
 	this->String::String();
-	if (src != nullptr)
+	if (src != nullptr) {
 		Resize(strlen(src));
+		for (size_t i = 0; i < Lenght(); i++)
+			(*this)[i] = src[i];
+	}
 	else
 		Resize(0);
-	for (size_t i = 0; i < Lenght(); i++)
-		(*this)[i] = src[i];
 	return *this;
 }
 String& String::operator+=(const String& a)
@@ -117,11 +118,12 @@ String& String::operator+=(const String& a)
 }
 String& String::operator+=(const char a[])
 {
-	size_t old_len = Lenght();
-	if (a != nullptr)
+	if (a != nullptr) {
+		size_t old_len = Lenght();
 		Resize(Lenght() + strlen(a));
-	for (size_t i = old_len; i < Lenght(); i++)
-		(*this)[i] = a[i - old_len];
+		for (size_t i = old_len; i < Lenght(); i++)
+			(*this)[i] = a[i - old_len];
+	}
 	return *this;
 }
 String& String::operator*=(const unsigned m)
